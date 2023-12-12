@@ -7,10 +7,10 @@ activate-venv:
 	source .venv/bin/activate
 
 requirements-dev:
-	python -m pip install -r requirements-dev.txt
+	python -m pip install -r requirements-dev.txt && python -m spacy download en_core_web_sm
 
 requirements:
-	pip-sync requirements.txt requirements-dev.txt
+	pip-sync requirements.txt requirements-dev.txt && python -m spacy download en_core_web_sm
 
 build-requirements:
 	pip-compile -o requirements.txt pyproject.toml

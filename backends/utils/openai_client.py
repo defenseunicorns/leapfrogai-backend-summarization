@@ -2,6 +2,8 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import os
 
+from .base_url import get_base_url
+
 load_dotenv()
 
 LEAPFROGAI_BASE_URL = os.getenv("LEAPFROGAI_BASE_URL")
@@ -17,8 +19,12 @@ if LEAPFROGAI_BASE_URL is None:
         f"Required environment variable LEAPFROGAI_BASE_URL not found"
     )
 
-openai_client = OpenAI(
-    base_url=LEAPFROGAI_BASE_URL,
-    api_key=LEAPFROGAI_API_KEY,
-    timeout=1000 * 60 * 60 * 2,  # 2 hours
-)
+LEAPFROGAI_HEALTH_URL = f"{get_base_url(LEAPFROGAI_BASE_URL)}/healthz"
+
+openai_client_opts = {
+    "base_url": LEAPFROGAI_BASE_URL,
+    "api_key": LEAPFROGAI_API_KEY,
+    "timeout": 1000 * 60 * 60 * 2,  # 2 hours
+}
+
+openai_client = OpenAI(**openai_client_opts)

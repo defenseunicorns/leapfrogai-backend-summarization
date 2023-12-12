@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 
 
 ##########
@@ -13,34 +13,27 @@ class Usage(BaseModel):
 
 
 ##########
-# COMPLETION
+# SUMMARIZATION
 ##########
-class CompletionRequest(BaseModel):
+class SummarizationRequest(BaseModel):
     model: str
-    prompt: str | list[int]
-    stream: bool | None = False
-    max_tokens: int | None = 16
-    temperature: float | None = 1.0
+    text: str | list[int]
+
+    @validator("text")
+    def text_must_exist(cls, v: str):
+        if len(v.strip()) <= 0:
+            raise ValueError("Text to be summarized must not be empty.")
+        return v
 
 
-class CompletionChoice(BaseModel):
-    index: int
-    text: str
-    logprobs: object = None
-    finish_reason: str = ""
+class SummarizationResponse(BaseModel):
+    summary: str
 
-
-class CompletionResponse(BaseModel):
-    id: str = ""
-    object: str = "completion"
-    created: int = 0
-    model: str = ""
-    choices: list[CompletionChoice]
-    usage: Usage | None = None
 
 ##########
 # MODELS
 ##########
+
 
 class ModelResponseModel(BaseModel):
     id: str

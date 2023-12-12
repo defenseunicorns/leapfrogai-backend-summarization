@@ -1,7 +1,8 @@
 from . import router
-from .types import Health
+import httpx
 
-from ..utils.openai_client import openai_client
+from .types import Health
+from ..utils.openai_client import LEAPFROGAI_HEALTH_URL
 from ..utils.exceptions import OPENAI_UNREACHABLE
 
 
@@ -10,10 +11,12 @@ async def healthz() -> Health:
     return Health()
 
 
-@router.get("/api-health")
+@router.get("/api/healthz")
 async def api_health() -> Health:
-    try:
-        openai_client.models.list()
-        return Health()
-    except:
-        raise OPENAI_UNREACHABLE
+    async with httpx.AsyncClient() as client:
+        response = await client.get(LEAPFROGAI_HEALTH_URL)
+
+        if response.status_code == 200:
+            return Health()
+        else:
+            raise OPENAI_UNREACHABLE

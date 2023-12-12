@@ -1,24 +1,24 @@
-from fastapi import HTTPException
 from . import router
 from .types import (
-    CompletionRequest,
+    SummarizationRequest,
+    SummarizationResponse,
     ModelResponse,
 )
-from .langchain_summarize import summarize
+from .summarize import summarize
 from ..utils.openai_client import openai_client
 from ..utils.exceptions import OPENAI_UNREACHABLE
 
 
 @router.post("/summarize")
-async def complete(req: CompletionRequest):
-    await summarize(req)
-    return req
+def complete(req: SummarizationRequest) -> SummarizationResponse:
+    summary = summarize(model=req.model, text=req.text)
+    return {"summary": summary}
 
 
 @router.get("/models")
 async def models() -> ModelResponse:
     try:
-        res = openai_client.models.list()
+        res: ModelResponse = openai_client.models.list()
     except:
         raise OPENAI_UNREACHABLE
     return res

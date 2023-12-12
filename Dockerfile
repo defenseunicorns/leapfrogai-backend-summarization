@@ -7,6 +7,7 @@ WORKDIR /leapfrogai
 COPY requirements.txt .
 
 RUN pip install -r requirements.txt --user
+RUN python -m spacy download en_core_web_sm
 
 FROM ghcr.io/defenseunicorns/leapfrogai/python:3.11-${ARCH}
 
