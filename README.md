@@ -2,7 +2,7 @@
 
 ## Description
 
-Backend API that adds a specific agent for tasks related to summarization.
+Intermediate API that adds an agent specfic to tasks requiring high-quality summarization.
 
 ## Usage
 
