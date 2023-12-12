@@ -3,60 +3,70 @@ from langchain.chains.summarize import load_summarize_chain
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.schema import Document
+import logging
 
-from ..utils.openai_client import openai_client_opts
+
+from ..utils.openai_client import openai_client_opts, openai_prompt_opts
+
+logger = logging.getLogger("summarize")
+
+CHUNK_SIZE = 2048
+CHUNK_OVERLAP = 256
 
 
-def create_document(text: str) -> Document:
+def create_document(text: str, text_id: int) -> Document:
+    logger.info(f"Beginning tokenized chunking of text #{text_id}")
+
     splitter = SpacyTextSplitter(
-        chunk_size=4000,
-        chunk_overlap=200,
+        chunk_size=CHUNK_SIZE,
+        chunk_overlap=CHUNK_OVERLAP,
+        separator=" ",
+        pipeline="sentencizer",
     )
     chunks = splitter.split_text(text)
     docs = [Document(page_content=text_chunk) for text_chunk in chunks]
+
+    logger.info(
+        f"Created {len(chunks)} chunks for text #{text_id}."
+    )
     return docs
 
 
 def summarize(text: str, model: str) -> str:
+    text_id = len(text)
+
+    logger.info(f"Beginning summarization of text #{text_id} using the {model} backend")
+
     llm = ChatOpenAI(
         **openai_client_opts,
+        **openai_prompt_opts,
         model_name=model,
-        max_tokens=2048,
-        temperature=0.5,
-        frequency_penalty=0.5,
-        presence_penalty=0.0,
     )
-    texts = create_document(text)
+    texts = create_document(text, text_id)
 
-    prompt_template = """Write a concise summary of the following:
-    {text}
-    CONCISE SUMMARY:"""
-    prompt = PromptTemplate.from_template(prompt_template)
+    initial_summary_template = "Your job is to write a coherent, bulleted summary that extracts all important ideas and action items from the given text: {text}"
+    initial_summary_prompt = PromptTemplate.from_template(initial_summary_template)
 
-    refine_template = (
-        "Your job is to produce a final summary in the form of clear and coherent bullets\n"
+    refine_summary_template = (
+        "Your job is to write a coherent, bulleted summary that extracts all important ideas and action items from the given text. "
         "We have provided an existing summary up to a certain point: {existing_answer}\n"
-        "We have the opportunity to refine the existing summary"
-        "(only if needed) with some more context below.\n"
-        "------------\n"
-        "{text}\n"
-        "------------\n"
-        "Given the new context, refine the original summary"
-        "If the context isn't useful, return the original summary."
+        "We have the opportunity to refine the existing summary (only if needed) with some more context: {text}\n"
+        "Given the new context, refine the original summary. If the context isn't useful, return the original summary."
     )
-    refine_prompt = PromptTemplate.from_template(refine_template)
+    refine_summary_prompt = PromptTemplate.from_template(refine_summary_template)
     chain = load_summarize_chain(
         llm=llm,
         chain_type="refine",
-        question_prompt=prompt,
-        refine_prompt=refine_prompt,
-        return_intermediate_steps=True,
-        input_key="texts",
-        output_key="summary",
+        question_prompt=initial_summary_prompt,
+        refine_prompt=refine_summary_prompt,
+        input_key="input",
+        output_key="output",
     )
 
-    result = chain({"texts": texts}, return_only_outputs=True)
+    result = chain({"input": texts}, return_only_outputs=True)
 
-    summary = result["summary"]
+    logger.info(f"Completed summarization of text #{text_id} using the {model} backend")
+
+    summary = result["output"]
 
     return summary

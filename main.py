@@ -9,4 +9,3 @@ app = FastAPI()
 
 app.include_router(summarization_router)
 app.include_router(health_router)
-

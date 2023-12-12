@@ -7,10 +7,10 @@ activate-venv:
 	source .venv/bin/activate
 
 requirements-dev:
-	python -m pip install -r requirements-dev.txt && python -m spacy download en_core_web_sm
+	python -m pip install -r requirements-dev.txt
 
 requirements:
-	pip-sync requirements.txt requirements-dev.txt && python -m spacy download en_core_web_sm
+	pip-sync requirements.txt requirements-dev.txt
 
 build-requirements:
 	pip-compile -o requirements.txt pyproject.toml
@@ -22,7 +22,7 @@ test:
 	pytest **/*.py
 
 dev:
-	uvicorn main:app --port 8081 --reload
+	uvicorn main:app --port 8081 --reload --log-config=log_config.yaml
 
 docker-build:
 	docker build -t ghcr.io/defenseunicorns/leapfrogai/summarization:${VERSION} .

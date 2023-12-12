@@ -27,4 +27,11 @@ openai_client_opts = {
     "timeout": 1000 * 60 * 60 * 2,  # 2 hours
 }
 
+openai_prompt_opts = {
+    "max_tokens": 8192,
+    "temperature": 0.2,
+    "frequency_penalty": 0.5,
+    "presence_penalty": 0.0,
+}
+
 openai_client = OpenAI(**openai_client_opts)

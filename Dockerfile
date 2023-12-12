@@ -7,7 +7,6 @@ WORKDIR /leapfrogai
 COPY requirements.txt .
 
 RUN pip install -r requirements.txt --user
-RUN python -m spacy download en_core_web_sm
 
 FROM ghcr.io/defenseunicorns/leapfrogai/python:3.11-${ARCH}
 
@@ -17,9 +16,8 @@ COPY --from=builder /home/nonroot/.local/lib/python3.11/site-packages /home/nonr
 COPY --from=builder /home/nonroot/.local/bin/uvicorn /home/nonroot/.local/bin/uvicorn
 
 COPY main.py .
-COPY utils/ utils/
 COPY backends/ backends/
 
 EXPOSE 8080
 
-ENTRYPOINT ["/home/nonroot/.local/bin/uvicorn", "main:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "8081"]
+ENTRYPOINT ["/home/nonroot/.local/bin/uvicorn", "main:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "8081", "--log-config=log_config.yaml"]
