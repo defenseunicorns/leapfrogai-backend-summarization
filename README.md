@@ -2,7 +2,7 @@
 
 ## Description
 
-Intermediate API that adds an agent specfic to tasks requiring high-quality summarization.
+Intermediate API that adds an agent specialized in tasks that require high-quality summarization.
 
 ## Usage
 
@@ -18,7 +18,7 @@ The instructions in this section assume the following:
    - https://github.com/defenseunicorns/leapfrogai-api
 3. You have chosen a LeapfrogAI model backend and have that running. Some examples of existing backends:
    - https://github.com/defenseunicorns/leapfrogai-backend-ctransformers
-   - https://github.com/defenseunicorns/leapfrogai-backend-whisper
+   - https://github.com/defenseunicorns/leapfrogai-backend-llama-cpp-python
 
 ### Local Development
 
