@@ -1,0 +1,43 @@
+kind: ZarfPackageConfig
+metadata:
+  name: "###ZARF_PKG_TMPL_NAME###"
+  version: "###ZARF_PKG_TMPL_IMAGE_VERSION###"
+  description: "An additional LeapfrogAI API layer for summarization tasks"
+
+constants:
+  - name: IMAGE_VERSION
+    value: "###ZARF_PKG_TMPL_IMAGE_VERSION###"
+  - name: NAME
+    value: "###ZARF_PKG_TMPL_NAME###"
+
+variables:
+  - name: LEAPFROGAI_BASE_URL
+    description: The base URL for the Leapfrog AI API
+    default: http://api.leapfrogai.svc.cluster.local:8080/openai/v1
+    prompt: true
+    sensitive: true
+  - name: LEAPFROGAI_API_KEY
+    description: The API key the Leapfrog AI API
+    default: my-test-key
+    prompt: true
+    sensitive: true
+
+components:
+  - name: "###ZARF_PKG_TMPL_NAME###"
+    required: true
+    manifests:
+      - name: "###ZARF_PKG_TMPL_NAME###"
+        namespace: leapfrogai
+        files:
+          - manifests/deploy.yaml
+    images:
+      - ghcr.io/defenseunicorns/leapfrogai/summarization:###ZARF_PKG_TMPL_IMAGE_VERSION###
+    actions:
+      onDeploy:
+        after:
+          - wait:
+              cluster:
+                kind: Deployment
+                name: "###ZARF_PKG_TMPL_NAME###"
+                namespace: leapfrogai
+                condition: Available
