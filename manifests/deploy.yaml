@@ -15,20 +15,6 @@ spec:
     spec:
       containers:
         - name: "###ZARF_PKG_TMPL_NAME###"
-          image: "ghcr.io/defenseunicorns/leapfrogai/leapfrog-ui:###ZARF_VAR_IMAGE_VERSION###"
+          image: "ghcr.io/defenseunicorns/leapfrogai/###ZARF_PKG_TMPL_NAME###:###ZARF_VAR_IMAGE_VERSION###"
           ports:
-            - containerPort: 3000
-          env:
-            - name: OPENAI_API_HOST
-              value: "###ZARF_VAR_LEAPFROGAI_BASE_URL###"
-            - name: RAG_API_HOST
-              value: "###ZARF_VAR_LEAPFROGAI_RAG_URL###"
-            - name: OPENAI_API_KEY
-              value: "###ZARF_VAR_LEAPFROGAI_API_KEY###"
-          resources:
-            requests:
-              memory: "5Gi"
-              cpu: "500m"
-            limits:
-              memory: "5Gi"
-              cpu: "1000m"
+            - containerPort: 8081
