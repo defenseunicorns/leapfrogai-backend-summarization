@@ -20,7 +20,7 @@ The instructions in this section assume the following:
 4. You have chosen a LeapfrogAI model backend and have that running. Some examples of existing backends:
    - https://github.com/defenseunicorns/leapfrogai-backend-ctransformers
    - https://github.com/defenseunicorns/leapfrogai-backend-llama-cpp-python
-   - **_NOTE:_** you need to use the _add-gpu-support_ branches on both backends to turn on GPU inferencing to accelerate the workflow and testing
+   - **_NOTE:_** you need to use the `add-gpu-support` branches on both backends to turn on GPU inferencing to accelerate the workflow and testing
 
 ### Local Development
 
@@ -47,5 +47,5 @@ For local image building and running.
 docker build -t ghcr.io/defenseunicorns/leapfrogai/summarization:latest .
 
 # Run the docker container
-docker run -p 8080:8080 -v ./.env:/leapfrogai/.env ghcr.io/defenseunicorns/leapfrogai/summarization:latest
+docker run -p 8081:8081 -v ./.env:/leapfrogai/.env ghcr.io/defenseunicorns/leapfrogai/summarization:latest
 ```
