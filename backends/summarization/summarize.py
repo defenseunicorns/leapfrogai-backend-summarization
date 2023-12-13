@@ -14,8 +14,8 @@ CHUNK_SIZE = 2048
 CHUNK_OVERLAP = 256
 
 
-def create_document(text: str, text_id: int) -> Document:
-    logger.info(f"Beginning tokenized chunking of text #{text_id}")
+def create_document(text: str, text_len: int) -> Document:
+    logger.info(f"Beginning tokenized chunking of text length {text_len}")
 
     splitter = SpacyTextSplitter(
         chunk_size=CHUNK_SIZE,
@@ -27,22 +27,22 @@ def create_document(text: str, text_id: int) -> Document:
     docs = [Document(page_content=text_chunk) for text_chunk in chunks]
 
     logger.info(
-        f"Created {len(chunks)} chunks for text #{text_id}."
+        f"Created {len(chunks)} x {CHUNK_SIZE} token chunks for text length {text_len}."
     )
     return docs
 
 
 def summarize(text: str, model: str) -> str:
-    text_id = len(text)
+    text_len = len(text)
 
-    logger.info(f"Beginning summarization of text #{text_id} using the {model} backend")
+    logger.info(f"Beginning summarization of text length {text_len} using the {model} backend")
 
     llm = ChatOpenAI(
         **openai_client_opts,
         **openai_prompt_opts,
         model_name=model,
     )
-    texts = create_document(text, text_id)
+    texts = create_document(text, text_len)
 
     initial_summary_template = "Your job is to write a coherent, bulleted summary that extracts all important ideas and action items from the given text: {text}"
     initial_summary_prompt = PromptTemplate.from_template(initial_summary_template)
@@ -65,7 +65,7 @@ def summarize(text: str, model: str) -> str:
 
     result = chain({"input": texts}, return_only_outputs=True)
 
-    logger.info(f"Completed summarization of text #{text_id} using the {model} backend")
+    logger.info(f"Completed summarization of text length {text_len} using the {model} backend")
 
     summary = result["output"]
 
