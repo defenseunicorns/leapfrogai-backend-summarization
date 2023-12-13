@@ -120,7 +120,7 @@ def summarize(text: str, model: str) -> str:
         logger.error(f"{CHAIN_SUMMARIZATION_FAILED.detail}: {e}")
         raise CHAIN_SUMMARIZATION_FAILED
 
-
+# TODO: consider using guidance or outlines (or similar) for response formatting instead
 def refine(text: str, model: str) -> str:
     try:
         text_len = len(text)

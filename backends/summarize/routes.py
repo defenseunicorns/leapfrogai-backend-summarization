@@ -16,8 +16,8 @@ def summarization(req: SummarizationRequest) -> SummarizationResponse:
 
 @router.post("/refine", tags=["refine"])
 def refinement(req: SummarizationRequest) -> RefinementResponse:
-    summary = refine(model=req.model, text=req.text.strip())
-    return {"summary": summary}
+    refined_summary = refine(model=req.model, text=req.text.strip())
+    return {"refine": refined_summary}
 
 
 @router.post("/summarize-and-refine", tags=["summarize and refine"])
