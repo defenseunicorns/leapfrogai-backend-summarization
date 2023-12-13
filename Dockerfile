@@ -6,7 +6,7 @@ WORKDIR /leapfrogai
 
 COPY requirements.txt .
 
-RUN pip install -r requirements.txt --user
+RUN pip install -r requirements.txt --user 
 
 FROM ghcr.io/defenseunicorns/leapfrogai/python:3.11-${ARCH}
 

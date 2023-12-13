@@ -32,3 +32,12 @@ class SummarizationRequest(BaseModel):
 
 class SummarizationResponse(BaseModel):
     summary: str
+
+
+class RefinementResponse(BaseModel):
+    refined_summary: str
+
+
+class SummarizeAndRefineResponse(BaseModel):
+    summary: str
+    refined_summary: str

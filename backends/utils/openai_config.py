@@ -1,4 +1,3 @@
-from openai import OpenAI
 from dotenv import load_dotenv
 import os
 
@@ -21,17 +20,15 @@ if LEAPFROGAI_BASE_URL is None:
 
 LEAPFROGAI_HEALTH_URL = f"{get_base_url(LEAPFROGAI_BASE_URL)}/healthz"
 
-openai_client_opts = {
+OPENAI_CLIENT_OPTS = {
     "base_url": LEAPFROGAI_BASE_URL,
     "api_key": LEAPFROGAI_API_KEY,
-    "timeout": 1000 * 60 * 60 * 2,  # 2 hours
+    "timeout": (1000 * 60 * 60 * 2),  # 2 hours
 }
 
-openai_prompt_opts = {
+OPENAI_PROMPT_OPTS = {
     "max_tokens": 8192,
     "temperature": 0.2,
     "frequency_penalty": 0.5,
     "presence_penalty": 0.0,
 }
-
-openai_client = OpenAI(**openai_client_opts)
