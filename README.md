@@ -2,7 +2,9 @@
 
 ## Description
 
-Intermediate API that adds an agent specialized in tasks that require high-quality summarization.
+An intermediate API that adds an agent specialized in tasks that require high-quality summarization of long-form text.
+
+Summaries are outputted in a free-form paragraph or as formatted sections (e.g., BLUF, notes, action items).
 
 ## Usage
 
@@ -16,11 +18,9 @@ The instructions in this section assume the following:
 2. You have filled out the `.env`, following the `.env.example`
 3. You have the LeapfrogAI API or other OpenAI API compliant server that can be reached:
    - https://github.com/defenseunicorns/leapfrogai-api
-   - **_NOTE:_** you need to use [this branch](https://github.com/defenseunicorns/leapfrogai-api/tree/add-completion-usage-placeholders) in order to workaround the LangChain usage compilation
 4. You have chosen a LeapfrogAI model backend and have that running. Some examples of existing backends:
    - https://github.com/defenseunicorns/leapfrogai-backend-ctransformers
    - https://github.com/defenseunicorns/leapfrogai-backend-llama-cpp-python
-   - **_NOTE:_** you need to use the `add-gpu-support` branches on both backends to turn on GPU inferencing to accelerate the workflow and testing
 
 ### Local Development
 
