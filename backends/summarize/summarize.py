@@ -48,7 +48,7 @@ def create_document(text: str, text_len: int, stuff: bool = False) -> list[Docum
 
         except Exception as e:
             logger.error(f"{TEXT_STUFFING_FAILED.detail}: {e}")
-            raise
+            raise TEXT_STUFFING_FAILED
     else:
         logger.info(f"Beginning tokenized chunking of text length {text_len}")
         try:
@@ -66,7 +66,7 @@ def create_document(text: str, text_len: int, stuff: bool = False) -> list[Docum
 
         except Exception as e:
             logger.error(f"{TEXT_CHUNKING_FAILED.detail}: {e}")
-            raise
+            raise TEXT_CHUNKING_FAILED
 
         return docs
 

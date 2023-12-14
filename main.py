@@ -24,7 +24,7 @@ tags_metadata = [
     },
     {
         "name": "upstream health",
-        "description": "Provides status on the upstream API that processes the model inferencing.",
+        "description": "Provides status on the upstream API that processes the model and inferencing requests.",
         "externalDocs": {
             "description": "LeapfrogAI API",
             "url": "https://github.com/defenseunicorns/leapfrogai-api",

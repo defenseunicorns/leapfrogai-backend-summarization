@@ -36,6 +36,10 @@ loggers:
     level: INFO
     handlers:
       - app
+  health:
+    level: INFO
+    handlers:
+      - app
   langchain:
     level: ERROR
     handlers:
