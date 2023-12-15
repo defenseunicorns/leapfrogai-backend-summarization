@@ -21,7 +21,12 @@ TEXT_STUFFING_FAILED = HTTPException(
     detail=f"Text stuffing failed",
 )
 
-REFINE_SUMMARIZATION_FAILED = HTTPException(
+UNGUIDED_REFINE_SUMMARIZATION_FAILED = HTTPException(
     status_code=500,
-    detail=f"Summarization refinement failed",
+    detail=f"Unguided summarization refinement failed",
+)
+
+GUIDED_REFINE_SUMMARIZATION_FAILED = HTTPException(
+    status_code=500,
+    detail=f"Guided summarization refinement failed",
 )

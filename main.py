@@ -12,11 +12,11 @@ tags_metadata = [
     },
     {
         "name": "refine",
-        "description": "Refines a provided text to a particular format.",
+        "description": "Refines a provided text to a particular format. Refinement can be done using prompt engineering or guidance templating.",
     },
-        {
+    {
         "name": "summarize and refine",
-        "description": "Summarizes and then refines the summary into a particular format.",
+        "description": "Summarizes and then refines the summary into a particular format. Refinement can be done using prompt engineering or guidance templating.",
     },
     {
         "name": "health",

@@ -32,15 +32,19 @@ loggers:
     level: INFO
     handlers:
       - access
-  summarize:
+  langchain:
+    level: ERROR
+    handlers:
+      - app
+  summarize.guidance:
+    level: INFO
+    handlers:
+      - app
+  summarize.langchain:
     level: INFO
     handlers:
       - app
   health:
     level: INFO
-    handlers:
-      - app
-  langchain:
-    level: ERROR
     handlers:
       - app

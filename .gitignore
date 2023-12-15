@@ -1,10 +1,10 @@
 .venv
-leapfrogai_api.egg-info
 __pycache__
 .vscode
-config.yaml
+.idea
 *.tar.zst
 .python-version
 .DS_Store
 *.egg*
 .env
+.model/

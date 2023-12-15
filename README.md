@@ -32,6 +32,9 @@ make create-venv
 make activate-venv
 make requirements-dev
 
+# Download model
+make fetch-model
+
 # Start Model Backend
 make dev
 ```

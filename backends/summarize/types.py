@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Literal
 
 from pydantic import BaseModel, validator
 
@@ -28,6 +29,10 @@ class SummarizationRequest(BaseModel):
         if len(v.strip()) <= 0:
             raise ValueError("Text to be summarized must not be empty.")
         return v
+
+
+class RefinementRequest(SummarizationRequest):
+    refine_method: Literal["unguided", "guided"] = "unguided"
 
 
 class SummarizationResponse(BaseModel):

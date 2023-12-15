@@ -1,11 +1,13 @@
 from . import router
 from .types import (
     SummarizationRequest,
+    RefinementRequest,
     SummarizationResponse,
     RefinementResponse,
     SummarizeAndRefineResponse,
 )
-from .summarize import summarize, refine
+from .langchain import summarize, unguided_refine
+from .guidance import guided_refine
 
 
 @router.post("/summarize", tags=["summarize"])
@@ -15,15 +17,26 @@ def summarization(req: SummarizationRequest) -> SummarizationResponse:
 
 
 @router.post("/refine", tags=["refine"])
-def refinement(req: SummarizationRequest) -> RefinementResponse:
-    refined_summary = refine(model=req.model, text=req.text.strip())
-    return {"refine": refined_summary}
+def refinement(req: RefinementRequest) -> RefinementResponse:
+    refined_summary = ""
+    if req.refine_method == "unguided":
+        refined_summary = unguided_refine(text=req.text.strip(), model=req.model)
+    else:
+        refined_summary = guided_refine(text=req.text.strip())
+
+    return {"refined_summary": refined_summary}
 
 
 @router.post("/summarize-and-refine", tags=["summarize and refine"])
-def summarization_and_refinement(
-    req: SummarizationRequest,
+def summarize_and_refine(
+    req: RefinementRequest,
 ) -> SummarizeAndRefineResponse:
-    summary = summarize(model=req.model, text=req.text.strip())
-    refined_summary = refine(model=req.model, text=summary)
+    summary = summarize(text=req.text.strip(), model=req.model)
+
+    refined_summary = ""
+    if req.refine_method == "unguided":
+        refined_summary = unguided_refine(text=summary, model=req.model)
+    else:
+        refined_summary = guided_refine(text=summary)
+
     return {"summary": summary, "refined_summary": refined_summary}
