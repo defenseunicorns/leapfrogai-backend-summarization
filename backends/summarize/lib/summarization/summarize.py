@@ -13,7 +13,6 @@ logger = logging.getLogger("summarization")
 
 CHUNK_SIZE = 2048
 CHUNK_OVERLAP = 128
-MAX_SIZE = 5000
 
 
 def summarize(text: str, model: str) -> str:
