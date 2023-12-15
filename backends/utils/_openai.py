@@ -28,7 +28,7 @@ OPENAI_CLIENT_OPTS = {
 
 OPENAI_PROMPT_OPTS = {
     "max_tokens": 8192,
-    "temperature": 0.2,
+    "temperature": 0.0,
     "frequency_penalty": 0.5,
     "presence_penalty": 0.0,
 }

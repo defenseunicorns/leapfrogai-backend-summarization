@@ -2,9 +2,9 @@ import httpx
 import logging
 
 from . import router
-from .types import Health
-from ..utils.openai_config import LEAPFROGAI_HEALTH_URL
-from ..utils.exceptions import OPENAI_UNREACHABLE
+from .lib.types import Health
+from backends.utils._openai import LEAPFROGAI_HEALTH_URL
+from backends.utils.exceptions import OPENAI_UNREACHABLE
 
 
 logger = logging.getLogger("health")

@@ -1,5 +1,10 @@
 from fastapi import HTTPException
-from ..utils.openai_config import LEAPFROGAI_BASE_URL
+from ._openai import LEAPFROGAI_BASE_URL
+
+NOT_A_URL = HTTPException(
+    status_code=422,
+    detail=f"{LEAPFROGAI_BASE_URL} is not a proper URL",
+)
 
 OPENAI_UNREACHABLE = HTTPException(
     status_code=502,
@@ -21,12 +26,17 @@ TEXT_STUFFING_FAILED = HTTPException(
     detail=f"Text stuffing failed",
 )
 
-UNGUIDED_REFINE_SUMMARIZATION_FAILED = HTTPException(
+SINGLE_PROMPT_REFINE_SUMMARIZATION_FAILED = HTTPException(
     status_code=500,
-    detail=f"Unguided summarization refinement failed",
+    detail=f"Single prompt summarization refinement failed",
 )
 
-GUIDED_REFINE_SUMMARIZATION_FAILED = HTTPException(
+MULTI_PROMPT_REFINE_SUMMARIZATION_FAILED = HTTPException(
     status_code=500,
-    detail=f"Guided summarization refinement failed",
+    detail=f"Multi prompt summarization refinement failed",
+)
+
+REFINE_SUMMARIZATION_METHOD_DOES_NOT_EXIST = HTTPException(
+    status_code=500,
+    detail=f"Request summarization refinement method is not s supported method",
 )

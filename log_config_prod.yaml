@@ -1,7 +1,7 @@
 version: 1
 disable_existing_loggers: False
 formatters:
-  default:
+  uvicorn:
     (): "uvicorn.logging.DefaultFormatter"
     fmt: "%(asctime)s %(levelprefix)s uvicorn - %(message)s"
   access:
@@ -11,9 +11,9 @@ formatters:
     (): "uvicorn.logging.DefaultFormatter"
     fmt: "%(asctime)s %(levelprefix)s %(name)s - %(message)s"
 handlers:
-  default:
+  uvicorn:
     class: logging.StreamHandler
-    formatter: default
+    formatter: uvicorn
     stream: ext://sys.stderr
   access:
     class: logging.StreamHandler
@@ -25,9 +25,9 @@ handlers:
     stream: ext://sys.stdout
 loggers:
   uvicorn.error:
-    level: INFO
+    level: ERROR
     handlers:
-      - default
+      - uvicorn
   uvicorn.access:
     level: INFO
     handlers:
@@ -36,15 +36,19 @@ loggers:
     level: ERROR
     handlers:
       - app
-  summarize.guidance:
+  utils:
+    level: ERROR
+    handlers:
+      - app
+  refinement:
     level: INFO
     handlers:
       - app
-  summarize.langchain:
+  summarization:
     level: INFO
     handlers:
       - app
   health:
-    level: INFO
+    level: ERROR
     handlers:
       - app

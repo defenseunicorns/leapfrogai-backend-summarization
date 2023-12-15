@@ -27,14 +27,11 @@ build-requirements:
 build-requirements-dev:
 	pip-compile --extra dev -o requirements-dev.txt pyproject.toml --allow-unsafe
 
-fetch-model:
-	python scripts/download_guidance_model.py
-
 test:
 	pytest **/*.py
 
 dev:
-	uvicorn main:app --port 8081 --reload --log-config=log_config.yaml
+	uvicorn main:app --port 8081 --reload --log-config=log_config_dev.yaml
 
 docker-build:
 	docker build -t ghcr.io/defenseunicorns/leapfrogai/summarization:${VERSION}-${ARCH} . --build-arg ARCH=${ARCH}

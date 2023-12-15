@@ -12,11 +12,11 @@ tags_metadata = [
     },
     {
         "name": "refine",
-        "description": "Refines a provided text to a particular format. Refinement can be done using prompt engineering or guidance templating.",
+        "description": "Refines a provided text to a particular format. Refinement can be done using the following methods: \n1. single-prompt (fastest, lower quality),\n2. multi-prompt (slowest, higher quality), and\n3. outlines (highest quality, doesn't work with all models).",
     },
     {
         "name": "summarize and refine",
-        "description": "Summarizes and then refines the summary into a particular format. Refinement can be done using prompt engineering or guidance templating.",
+        "description": "Summarizes and then refines the summary into a particular format. Refinement can be done using the following methods: \n1. single-prompt (fastest, lower quality),\n2. multi-prompt (slowest, higher quality), and\n3. outlines (highest quality, doesn't work with all models).",
     },
     {
         "name": "health",
