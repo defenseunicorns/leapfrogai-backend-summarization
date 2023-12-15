@@ -28,7 +28,7 @@ build-requirements-dev:
 	pip-compile --extra dev -o requirements-dev.txt pyproject.toml --allow-unsafe
 
 fetch-model:
-	python scripts/download_gpt2.py
+	python scripts/download_guidance_model.py
 
 test:
 	pytest **/*.py

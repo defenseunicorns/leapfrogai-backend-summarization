@@ -5,10 +5,10 @@ FROM ghcr.io/defenseunicorns/leapfrogai/python:3.11-dev-${ARCH} as builder
 WORKDIR /leapfrogai
 
 COPY requirements.txt .
-COPY scripts/download_gpt2.py .
+COPY scripts/download_guidance_model.py /leapfrogai/.model/
 
 RUN pip install -r requirements.txt --user 
-RUN python scripts/download_gpt2.py
+RUN python scripts/download_guidance_model.py
 
 FROM ghcr.io/defenseunicorns/leapfrogai/python:3.11-${ARCH}
 
